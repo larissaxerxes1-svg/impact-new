@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPACT - Conectando Recursos. Transformando Itapetininga.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepTeal: '#0d2b3a',
+                        midTeal: '#1d7a8c',
+                        accentGreen: '#10b981',
+                        iceWhite: '#f8fafc',
+                        slateGray: '#64748b',
+                        softGold: '#f59e0b',
+                        darkBg: '#091e28'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base Accessibility & Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            transition: background-color 0.3s ease, color 0.3s ease, font-size 0.2s ease;
+        }
+
+        /* High Contrast Mode CSS */
+        body.high-contrast {
+            background-color: #000000 !important;
+            color: #ffffff !important;
+        }
+        body.high-contrast .bg-white,
+        body.high-contrast .bg-iceWhite,
+        body.high-contrast .bg-slate-50,
+        body.high-contrast .bg-slate-100 {
+            background-color: #121212 !important;
+            color: #ffffff !important;
+            border-color: #ffff00 !important;
+        }
+        body.high-contrast .bg-deepTeal,
+        body.high-contrast .bg-midTeal {
+            background-color: #000000 !important;
+            border: 2px solid #00ffcc !important;
+        }
+        body.high-contrast text,
+        body.high-contrast p,
+        body.high-contrast h1,
+        body.high-contrast h2,
+        body.high-contrast h3,
+        body.high-contrast h4,
+        body.high-contrast span {
+            color: #ffffff !important;
+        }
+        body.high-contrast button {
+            border: 2px solid #ffff00 !important;
+            background-color: #000000 !important;
+            color: #ffff00 !important;
+        }
+        body.high-contrast .badge-demo {
+            background-color: #ff0055 !important;
+            color: #ffffff !important;
+        }
+
+        /* Itapetininga Network Background Map Pattern */
+        .itapetininga-bg {
+            background-image: radial-gradient(rgba(29, 122, 140, 0.15) 1.5px, transparent 1.5px), radial-gradient(rgba(16, 185, 129, 0.1) 1.5px, #0d2b3a 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        
+        .itapetininga-light-bg {
+            background-image: radial-gradient(rgba(29, 122, 140, 0.08) 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        /* Card Hover Effects */
+        .card-interactive {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(13, 43, 58, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1d7a8c;
+            border-radius: 4px;
+        }
+
+        /* Pulse Animation for Map Connections */
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.4); opacity: 1; }
+        }
+        .pulse-node {
+            animation: pulseDot 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800 antialiased" id="main-body">
+
+    <!-- DEMO ACCESSIBILITY & PROTO BANNER -->
+   <div class="bg-blue-600 text-white text-xs sm:text-sm font-semibold py-1.5 px-4 text-center flex justify-between items-center z-50 shadow-sm">
+        <div class="flex items-center gap-2 mx-auto">
+            <span class="bg-white text-blue-700 text-[10px] uppercase tracking-widest px-2 py-0.5 rounded font-extrabold">Protótipo Acadêmico</span>
+            <span>Navegação Funcional e Demonstrativa da Plataforma IMPACT — Itapetininga/SP</span>
+        </div>
+        <button onclick="switchScreen('acessibilidade')" class="hidden md:inline-flex items-center gap-1 bg-slate-900 text-white hover:bg-slate-800 px-2.5 py-0.5 rounded text-xs transition">
+            <i class="fa-solid fa-universal-access"></i> Central de Acessibilidade
+        </button>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="sticky top-0 z-40 bg-deepTeal/95 backdrop-blur-md border-b border-teal-800/40 text-white shadow-md transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchScreen('inicio')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accentGreen to-midTeal flex items-center justify-center text-white font-extrabold text-xl shadow-lg border border-teal-300/30">
+                        I
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-wider text-white">IMPACT</span>
+                        <span class="hidden sm:block text-[10px] text-teal-200 tracking-widest uppercase font-medium">Itapetininga • SP</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex items-center space-x-1 border-l border-r border-teal-800/50 px-4">
+                    <button onclick="switchScreen('inicio')" class="nav-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-house text-xs text-teal-300"></i> Início
+                    </button>
+                    <button onclick="switchScreen('como-funciona')" class="nav-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info text-xs text-teal-300"></i> Como funciona
+                    </button>
+                    <button onclick="switchScreen('mapa-itapetininga')" class="nav-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-map-location-dot text-xs text-teal-300"></i> Impacto Local
+                    </button>
+                    <button onclick="switchScreen('historias')" class="nav-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-heart text-xs text-teal-300"></i> Histórias
+                    </button>
+                    <button onclick="switchScreen('meu-impacto')" class="nav-link px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/10 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-chart-pie text-xs text-teal-300"></i> Meu Painel
+                    </button>
+                </nav>
+
+                <!-- Quick Accessibility Controls -->
+                <div class="hidden sm:flex items-center space-x-2">
+                    <button onclick="falarPagina()" title="Ouvir conteúdo" class="p-2 rounded-lg bg-teal-900/60 hover:bg-teal-700 text-teal-100 text-xs font-semibold flex items-center gap-1.5 border border-teal-600/40 transition">
+                        <i class="fa-solid fa-volume-high text-emerald-400"></i> <span>Ouvir</span>
+                    </button>
+                    
+                    <button onclick="toggleLibrasModal()" title="Intérprete de Libras" class="p-2 rounded-lg bg-teal-900/60 hover:bg-teal-700 text-teal-100 text-xs font-semibold flex items-center gap-1.5 border border-teal-600/40 transition">
+                        <i class="fa-solid fa-hands-asl-interpreting text-amber-400"></i> <span>Libras</span>
+                    </button>
+
+                    <button onclick="toggleHighContrast()" title="Alto Contraste" class="p-2 rounded-lg bg-teal-900/60 hover:bg-teal-700 text-teal-100 text-xs font-semibold border border-teal-600/40 transition">
+                        <i class="fa-solid fa-circle-half-stroke"></i>
+                    </button>
+
+                    <div class="flex items-center bg-teal-950/80 rounded-lg p-1 border border-teal-700/50">
+                        <button onclick="changeFontSize(-1)" class="px-2 py-0.5 text-xs font-bold hover:text-emerald-400" title="Diminuir Fonte">A-</button>
+                        <button onclick="resetFontSize()" class="px-2 py-0.5 text-xs font-bold hover:text-emerald-400" title="Fonte Normal">A</button>
+                        <button onclick="changeFontSize(1)" class="px-2 py-0.5 text-xs font-bold hover:text-emerald-400" title="Aumentar Fonte">A+</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-teal-200 hover:text-white hover:bg-teal-800/50 focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-deepTeal border-b border-teal-800/80 px-4 pt-2 pb-6 space-y-2">
+            <button onclick="switchScreen('inicio'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2">
+                <i class="fa-solid fa-house text-emerald-400"></i> Início
+            </button>
+            <button onclick="switchScreen('como-funciona'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-emerald-400"></i> Como funciona
+            </button>
+            <button onclick="switchScreen('como-participar'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2">
+                <i class="fa-solid fa-hand-holding-heart text-emerald-400"></i> Como Participar
+            </button>
+            <button onclick="switchScreen('mapa-itapetininga'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2">
+                <i class="fa-solid fa-map-location-dot text-emerald-400"></i> Impacto em Itapetininga
+            </button>
+            <button onclick="switchScreen('historias'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2">
+                <i class="fa-solid fa-heart text-emerald-400"></i> Histórias de Impacto
+            </button>
+            <button onclick="switchScreen('meu-impacto'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2">
+                <i class="fa-solid fa-chart-pie text-emerald-400"></i> Meu Painel
+            </button>
+            <button onclick="switchScreen('acessibilidade'); toggleMobileMenu();" class="w-full text-left py-2.5 px-3 rounded-lg hover:bg-teal-800 text-sm font-medium flex items-center gap-2 border-t border-teal-800 pt-3">
+                <i class="fa-solid fa-universal-access text-amber-400"></i> Central de Acessibilidade
+            </button>
+            <div class="flex items-center justify-between pt-2 border-t border-teal-800 text-xs">
+                <button onclick="switchScreen('modo-audio')" class="flex items-center gap-1 bg-teal-900 px-3 py-2 rounded text-emerald-300">
+                    <i class="fa-solid fa-volume-high"></i> Ouvir
+                </button>
+                <button onclick="toggleLibrasModal()" class="flex items-center gap-1 bg-teal-900 px-3 py-2 rounded text-amber-300">
+                    <i class="fa-solid fa-hands-asl-interpreting"></i> Libras
+                </button>
+                <button onclick="toggleHighContrast()" class="flex items-center gap-1 bg-teal-900 px-3 py-2 rounded text-white">
+                    <i class="fa-solid fa-circle-half-stroke"></i> Contraste
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- QUICK SCREEN SELECTOR BAR FOR PRESENTATION -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 overflow-x-auto whitespace-nowrap flex items-center gap-2 border-b border-slate-800 shadow-inner">
+        <span class="text-teal-400 font-bold uppercase tracking-wider text-[11px] flex items-center gap-1">
+            <i class="fa-solid fa-compass"></i> Atalhos do Protótipo:
+        </span>
+        <button onclick="switchScreen('inicio')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">1. Início</button>
+        <button onclick="switchScreen('como-funciona')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">2. Como Funciona</button>
+        <button onclick="switchScreen('como-participar')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">3. Como Participar</button>
+        <button onclick="switchScreen('acesso')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">4. Acesso</button>
+        <button onclick="switchScreen('cadastro')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">5. Cadastro</button>
+        <button onclick="switchScreen('quero-doar')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">5. Quero Doar</button>
+        <button onclick="switchScreen('preciso-recursos')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">6. Buscar Recursos</button>
+        <button onclick="switchScreen('conexao')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">8. Conexão Visual</button>
+        <button onclick="switchScreen('acompanhamento')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">9. Linha do Tempo</button>
+        <button onclick="switchScreen('meu-impacto')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">10. Meu Painel & Conquistas</button>
+        <button onclick="switchScreen('mapa-itapetininga')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">11. Mapa Itapetininga</button>
+        <button onclick="switchScreen('acessibilidade')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">12. Acessibilidade</button>
+        <button onclick="switchScreen('tela-final')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-teal-700 hover:text-white transition">13. Chamada Final</button>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINERS -->
+    <main class="flex-grow">
+
+        <!-- SCREEN 1: TELA INICIAL (HERO) -->
+        <section id="screen-inicio" class="screen-view active min-h-[85vh] bg-deepTeal text-white itapetininga-bg relative flex items-center py-12 lg:py-20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+                <div class="grid lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Copy & Actions -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center gap-2 bg-teal-900/80 border border-emerald-500/30 px-3.5 py-1.5 rounded-full text-xs text-emerald-300 font-semibold backdrop-blur-sm">
+                            <i class="fa-solid fa-location-dot text-emerald-400"></i>
+                            <span>Iniciando em Itapetininga – SP</span>
+                        </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                            IMPACT
+                        </h1>
+                        <p class="text-2xl sm:text-3xl font-light text-teal-100 italic">
+                            “O que está parado pode transformar uma história.”
+                        </p>
+                        
+                        <div class="p-4 rounded-xl bg-teal-900/40 border border-teal-700/50 backdrop-blur-sm max-w-2xl">
+                            <p class="text-lg text-slate-200 leading-relaxed font-normal">
+                                Conectando recursos. Transformando Itapetininga.
+                            </p>
+                            <p class="text-sm text-slate-300 mt-1">
+                                Uma rede local que aproxima quem tem recursos disponíveis de quem precisa deles, gerando impacto social duradouro.
+                            </p>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex flex-wrap gap-4 pt-2">
+                            <button onclick="switchScreen('como-participar')" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-emerald-500/20 transition-all flex items-center gap-3 text-base">
+                                QUERO PARTICIPAR <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button onclick="switchScreen('como-funciona')" class="bg-teal-900/80 hover:bg-teal-800 text-white font-semibold py-4 px-8 rounded-xl border border-teal-600 transition-all flex items-center gap-2 text-base">
+                                CONHECER O IMPACT <i class="fa-solid fa-circle-play text-emerald-400"></i>
+                            </button>
+                        </div>
+
+                        <!-- Network Slogan -->
+                        <div class="pt-4 flex items-center gap-6 text-sm text-teal-200/80">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Doe</span>
+                            <span class="text-teal-600">•</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Conecte</span>
+                            <span class="text-teal-600">•</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Transforme</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Visual Composition Diagram -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-slate-900/80 border border-teal-700/60 rounded-2xl p-6 shadow-2xl backdrop-blur-md relative">
+                            <div class="absolute -top-3 right-4 bg-emerald-500 text-slate-900 text-[10px] uppercase font-black px-3 py-1 rounded-full tracking-wider">
+                                Ecossistema de Conexão
+                            </div>
+                            
+                            <h3 class="text-xs uppercase tracking-widest text-teal-300 font-bold mb-6 text-center">
+                                QUEM TEM → RECURSO → CONEXÃO → QUEM PRECISA → IMPACTO
+                            </h3>
+
+                            <div class="space-y-4 relative">
+                                <!-- Line connection SVG -->
+                                <div class="absolute left-[27px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-teal-500 via-emerald-400 to-amber-400 -z-0"></div>
+
+                                <!-- Node 1: Empresa -->
+                                <div class="flex items-center gap-4 bg-teal-950/80 p-3.5 rounded-xl border border-teal-800/80 relative z-10 card-interactive">
+                                    <div class="w-10 h-10 rounded-lg bg-teal-800 text-teal-200 flex items-center justify-center font-bold text-lg border border-teal-600">
+                                        <i class="fa-solid fa-building-user"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-teal-400 font-semibold block">01. ORIGEM</span>
+                                        <h4 class="font-bold text-sm text-white">Empresa / Comércio / Doador</h4>
+                                    </div>
+                                </div>
+
+                                <!-- Node 2: Recurso -->
+                                <div class="flex items-center gap-4 bg-teal-950/80 p-3.5 rounded-xl border border-teal-800/80 relative z-10 card-interactive ml-3">
+                                    <div class="w-10 h-10 rounded-lg bg-emerald-900 text-emerald-300 flex items-center justify-center font-bold text-lg border border-emerald-600">
+                                        <i class="fa-solid fa-boxes-packing"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-emerald-400 font-semibold block">02. RECURSO DISPONÍVEL</span>
+                                        <h4 class="font-bold text-sm text-white">Móveis, Livros, Equipamentos</h4>
+                                    </div>
+                                </div>
+
+                                <!-- Node 3: Instituição -->
+                                <div class="flex items-center gap-4 bg-teal-950/80 p-3.5 rounded-xl border border-teal-800/80 relative z-10 card-interactive ml-6">
+                                    <div class="w-10 h-10 rounded-lg bg-sky-900 text-sky-300 flex items-center justify-center font-bold text-lg border border-sky-600">
+                                        <i class="fa-solid fa-school-flag"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-sky-400 font-semibold block">03. CONEXÃO DIRETA</span>
+                                        <h4 class="font-bold text-sm text-white">Instituição Social Beneficiada</h4>
+                                    </div>
+                                </div>
+
+                                <!-- Node 4: Impacto -->
+                                <div class="flex items-center gap-4 bg-emerald-950/90 p-3.5 rounded-xl border border-emerald-500/60 relative z-10 card-interactive ml-9 shadow-lg shadow-emerald-950/50">
+                                    <div class="w-10 h-10 rounded-lg bg-amber-500 text-slate-900 flex items-center justify-center font-bold text-lg shadow">
+                                        <i class="fa-solid fa-hands-holding-circle"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-amber-300 font-semibold block">04. RESULTADO REAL</span>
+                                        <h4 class="font-bold text-sm text-white">Impacto e Transformação Local</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-4 border-t border-teal-800/60 flex items-center justify-between text-xs text-slate-400">
+                                <span><i class="fa-solid fa-location-pin text-emerald-400 mr-1"></i> Itapetininga – SP</span>
+                                <span class="bg-slate-800 text-teal-300 px-2.5 py-0.5 rounded text-[11px]">Rede Local de Colaboração</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: COMO FUNCIONA -->
+        <section id="screen-como-funciona" class="screen-view hidden py-16 bg-slate-50 text-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-midTeal font-bold uppercase tracking-widest text-xs bg-teal-100 px-3 py-1 rounded-full">Metodologia Simplificada</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-deepTeal mt-3">Como o IMPACT funciona?</h2>
+                    <p class="text-slate-600 mt-2 text-lg">Um ciclo transparente e eficiente para dar novo destino a materiais parados.</p>
+                </div>
+
+                <!-- 3 Steps Grid with Connected Line -->
+                <div class="relative">
+                    <!-- Connector line in desktop -->
+                    <div class="hidden lg:block absolute top-1/2 left-1/6 right-1/6 h-1 bg-gradient-to-r from-midTeal via-accentGreen to-midTeal -translate-y-8 z-0"></div>
+
+                    <div class="grid lg:grid-cols-3 gap-8 relative z-10">
+                        
+                        <!-- Step 01 -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition card-interactive flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-deepTeal text-white text-2xl font-black flex items-center justify-center mb-6 shadow-md border-2 border-midTeal">
+                                01
+                            </div>
+                            <h3 class="text-xl font-bold text-deepTeal mb-2">ENCONTRE</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                Mapeie e encontre recursos parados em empresas, comércios ou residências de Itapetininga que podem ser totalmente reaproveitados.
+                            </p>
+                            <span class="mt-auto text-xs font-semibold text-midTeal bg-slate-100 px-3 py-1 rounded-full">Disponibilização / Mapeamento</span>
+                        </div>
+
+                        <!-- Step 02 -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition card-interactive flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-midTeal text-white text-2xl font-black flex items-center justify-center mb-6 shadow-md border-2 border-teal-300">
+                                02
+                            </div>
+                            <h3 class="text-xl font-bold text-deepTeal mb-2">CONECTE</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                O algoritmo aproxima e conecta quem possui o material disponível com instituições sociais e educacionais que precisam do item.
+                            </p>
+                            <span class="mt-auto text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">Match Inteligente</span>
+                        </div>
+
+                        <!-- Step 03 -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition card-interactive flex flex-col items-center text-center">
+                            <div class="w-16 h-16 rounded-2xl bg-accentGreen text-white text-2xl font-black flex items-center justify-center mb-6 shadow-md border-2 border-emerald-300">
+                                03
+                            </div>
+                            <h3 class="text-xl font-bold text-deepTeal mb-2">TRANSFORME</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                                Transforme materiais sem uso em novas oportunidades de estudo, trabalho e desenvolvimento humano em nossa cidade.
+                            </p>
+                            <span class="mt-auto text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1 rounded-full">Acompanhamento do Impacto</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Highlight Quote Banner -->
+                <div class="mt-16 bg-gradient-to-r from-deepTeal to-midTeal text-white p-8 rounded-2xl text-center shadow-lg relative overflow-hidden">
+                    <div class="relative z-10 max-w-2xl mx-auto space-y-4">
+                        <i class="fa-solid fa-quote-left text-3xl text-emerald-400 opacity-60"></i>
+                        <p class="text-2xl font-semibold italic text-teal-50">
+                            “O que sobra em um lugar pode fazer falta em outro.”
+                        </p>
+                        <div class="pt-2">
+                            <button onclick="switchScreen('como-participar')" class="bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-bold px-8 py-3.5 rounded-xl transition shadow-md">
+                                QUERO PARTICIPAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 3: COMO PARTICIPAR -->
+        <section id="screen-como-participar" class="screen-view hidden py-16 bg-slate-50 min-h-[85vh] flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-10">
+                
+                <!-- Informative Green Banner -->
+                <div class="max-w-4xl mx-auto bg-emerald-50/90 border border-emerald-200/80 rounded-2xl p-5 sm:p-6 flex items-start gap-4 shadow-sm text-slate-700">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shrink-0 mt-0.5">
+                        <i class="fa-solid fa-shield-heart"></i>
+                    </div>
+                    <div class="text-xs sm:text-sm leading-relaxed">
+                        <p class="font-bold text-deepTeal text-sm sm:text-base mb-1">
+                            IMPACT é 100% gratuito e sem fins lucrativos.
+                        </p>
+                        <p class="text-slate-600">
+                            Não há intermediação financeira nem cobrança de taxas. Uma ponte entre quem pode doar e instituições que precisam de materiais em bom estado. <strong class="text-deepTeal">Não é permitido cadastrar comidas ou alimentos.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Title Section -->
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-[11px] font-black uppercase tracking-widest bg-emerald-100 text-emerald-800 px-3.5 py-1 rounded-full">
+                        Faça parte da rede
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-deepTeal tracking-tight">
+                        Por onde você quer começar?
+                    </h2>
+                    <p class="text-slate-500 text-base">
+                        Escolha como o IMPACT pode ajudar você ou sua instituição.
+                    </p>
+                </div>
+
+                <!-- 3 Action Cards Grid -->
+                <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto pt-2">
+                    
+                    <!-- Card 1: Quero Doar -->
+                    <div onclick="switchScreen('quero-doar')" class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-midTeal transition cursor-pointer card-interactive flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 text-midTeal group-hover:bg-midTeal group-hover:text-white flex items-center justify-center text-2xl font-bold transition shadow-sm">
+                                <i class="fa-solid fa-store"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-extrabold text-midTeal uppercase tracking-wider block mb-1">Doador</span>
+                                <h3 class="text-2xl font-black text-deepTeal mb-2">QUERO DOAR</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    Tenho móveis, livros, equipamentos ou outros materiais em bom estado para compartilhar.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="pt-6">
+                            <span class="text-midTeal font-bold text-sm flex items-center gap-2 group-hover:translate-x-1 transition">
+                                Cadastrar Recurso <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Preciso de Recursos -->
+                    <div onclick="switchScreen('preciso-recursos')" class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-sky-500 transition cursor-pointer card-interactive flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-sky-50 text-sky-600 group-hover:bg-sky-600 group-hover:text-white flex items-center justify-center text-2xl font-bold transition shadow-sm">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-extrabold text-sky-600 uppercase tracking-wider block mb-1">Instituição</span>
+                                <h3 class="text-2xl font-black text-deepTeal mb-2">PRECISO DE RECURSOS</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    Represento uma instituição e estou procurando materiais para atender uma necessidade.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="pt-6">
+                            <span class="text-sky-600 font-bold text-sm flex items-center gap-2 group-hover:translate-x-1 transition">
+                                Buscar Disponíveis <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Ver Como Funciona -->
+                    <div onclick="switchScreen('como-funciona')" class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-amber-500 transition cursor-pointer card-interactive flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white flex items-center justify-center text-2xl font-bold transition shadow-sm">
+                                <i class="fa-solid fa-earth-americas"></i>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-extrabold text-amber-600 uppercase tracking-wider block mb-1">Transparência</span>
+                                <h3 class="text-2xl font-black text-deepTeal mb-2">VER COMO FUNCIONA</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    Entenda como acontecem as doações, as conexões e o acompanhamento dos recursos.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="pt-6">
+                            <span class="text-amber-600 font-bold text-sm flex items-center gap-2 group-hover:translate-x-1 transition">
+                                Conhecer etapas <i class="fa-solid fa-chevron-right text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 4: TELA DE ACESSO -->
+        <section id="screen-acesso" class="screen-view hidden py-16 bg-slate-100 min-h-[75vh] flex items-center">
+            <div class="max-w-md mx-auto px-4 w-full">
+                
+                <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="w-12 h-12 bg-deepTeal text-emerald-400 rounded-xl flex items-center justify-center text-xl font-black mx-auto">
+                            I
+                        </div>
+                        <h2 class="text-2xl font-bold text-deepTeal">Acesse a Plataforma</h2>
+                        <p class="text-slate-500 text-sm">Entre do jeito que for mais fácil para você.</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <button onclick="handleAcessoSimulado('E-mail')" class="w-full py-3 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 font-semibold text-slate-700 flex items-center justify-center gap-3 transition">
+                            <i class="fa-regular fa-envelope text-midTeal"></i> Entrar com E-mail
+                        </button>
+                        
+                        <button onclick="handleAcessoSimulado('Telefone')" class="w-full py-3 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 font-semibold text-slate-700 flex items-center justify-center gap-3 transition">
+                            <i class="fa-solid fa-mobile-screen-button text-emerald-600"></i> Entrar com Telefone / WhatsApp
+                        </button>
+
+                        <button onclick="handleAcessoSimulado('Código')" class="w-full py-3 px-4 rounded-xl border border-slate-300 hover:bg-slate-50 font-semibold text-slate-700 flex items-center justify-center gap-3 transition">
+                            <i class="fa-solid fa-key text-amber-500"></i> Entrar com Código de Acesso
+                        </button>
+                    </div>
+
+                    <div class="text-center pt-1">
+                        <p class="text-sm text-slate-500">Ainda não tem uma conta?</p>
+                        <button type="button" onclick="switchScreen('cadastro')" class="mt-1 text-midTeal hover:text-deepTeal font-bold text-sm underline underline-offset-4">Criar minha conta no IMPACT</button>
+                    </div>
+
+                    <div class="relative py-2">
+                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
+                        <div class="relative flex justify-center text-xs text-slate-400 uppercase"><span class="bg-white px-2">Ou experimente</span></div>
+                    </div>
+
+                    <button onclick="handleAcessoSimulado('Visitante')" class="w-full py-3.5 px-4 rounded-xl bg-deepTeal hover:bg-teal-900 text-white font-bold text-sm shadow transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-user-check text-emerald-400"></i> Continuar como Visitante
+                    </button>
+
+                    <div class="bg-teal-50 border border-teal-200 rounded-xl p-3 text-center">
+                        <p class="text-xs text-teal-800">
+                            💡 <strong>Demonstração Acadêmica:</strong> Você pode conhecer e navegar pelo IMPACT antes de criar uma conta real.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 5: CADASTRO DE PARTICIPANTE -->
+        <section id="screen-cadastro" class="screen-view hidden py-12 sm:py-16 bg-slate-100 min-h-[75vh] flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div class="grid lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- LEFT COLUMN: FORMULÁRIO PRINCIPAL (7 cols) -->
+                    <div class="lg:col-span-7 bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 sm:p-10 space-y-6">
+                        
+                        <!-- Cabeçalho -->
+                        <div>
+                            <span class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase px-3 py-1 rounded-full tracking-wider mb-3">Cadastro gratuito</span>
+                            <h2 class="text-3xl sm:text-4xl font-black text-deepTeal tracking-tight">Crie sua conta no IMPACT</h2>
+                            <p class="text-slate-500 text-sm mt-1">Preencha seus dados para começar. Leva só alguns instantes.</p>
+                        </div>
+
+                        <form id="impact-register-form" onsubmit="handleCadastroParticipante(event)" class="space-y-5">
+                            
+                            <!-- Como você vai participar -->
+                            <div>
+                                <label for="cadastro-perfil" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Como você vai participar?</label>
+                                <select id="cadastro-perfil" name="perfil" required class="w-full h-12 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm bg-white font-medium text-slate-700">
+                                    <option value="Pessoa física">Pessoa física</option>
+                                    <option value="Instituição / organização">Instituição / organização</option>
+                                </select>
+                            </div>
+
+                            <!-- Nome completo ou nome da instituição -->
+                            <div>
+                                <label for="cadastro-nome" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nome completo ou nome da instituição</label>
+                                <input id="cadastro-nome" name="nome" type="text" required autocomplete="name" placeholder="Como podemos chamar você?" class="w-full h-12 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm text-slate-700 placeholder:text-slate-400">
+                            </div>
+
+                            <!-- E-mail e Telefone (Grid 2 colunas) -->
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="cadastro-email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">E-mail</label>
+                                    <input id="cadastro-email" name="email" type="email" required autocomplete="email" placeholder="voce@email.com" class="w-full h-12 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm text-slate-700 placeholder:text-slate-400">
+                                </div>
+                                <div>
+                                    <label for="cadastro-telefone" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Telefone</label>
+                                    <input id="cadastro-telefone" name="telefone" type="tel" required autocomplete="tel" placeholder="(15) 99999-9999" class="w-full h-12 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm text-slate-700 placeholder:text-slate-400">
+                                </div>
+                            </div>
+
+                            <!-- Senha e Confirmação de Senha (Grid 2 colunas) -->
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="cadastro-senha" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Crie uma senha</label>
+                                    <input id="cadastro-senha" name="senha" type="password" required minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" class="w-full h-12 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm text-slate-700 placeholder:text-slate-400">
+                                </div>
+                                <div>
+                                    <label for="cadastro-confirmar-senha" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Confirme a senha</label>
+                                    <input id="cadastro-confirmar-senha" name="confirmarSenha" type="password" required minlength="8" autocomplete="new-password" placeholder="Digite novamente" class="w-full h-12 px-4 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm text-slate-700 placeholder:text-slate-400">
+                                </div>
+                            </div>
+
+                            <!-- Termos de uso -->
+                            <div class="pt-1">
+                                <label class="flex items-start gap-3 text-xs text-slate-600 leading-relaxed cursor-pointer select-none">
+                                    <input id="cadastro-termos" type="checkbox" required class="mt-0.5 accent-emerald-600 w-4 h-4 rounded">
+                                    <span>Li e concordo com as orientações de uso e segurança do IMPACT. Entendo que este é um protótipo acadêmico.</span>
+                                </label>
+                            </div>
+
+                            <!-- Botão Finalizar -->
+                            <div class="pt-2">
+                                <button type="submit" class="w-full h-13 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-sm uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+                                    Finalizar cadastro <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+
+                            <!-- Voltar ao login -->
+                            <div class="text-center pt-1">
+                                <span class="text-xs text-slate-500">Já possui conta?</span>
+                                <button type="button" onclick="switchScreen('acesso')" class="text-xs font-bold text-midTeal hover:underline ml-1">Voltar ao acesso</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!-- RIGHT COLUMN: SEGURANÇA E CONFIANÇA (5 cols) -->
+                    <div class="lg:col-span-5 space-y-6">
+                        
+                        <!-- Top Card Dark -->
+                        <div class="bg-deepTeal text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-teal-800/60 relative overflow-hidden">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-800/80 text-emerald-400 flex items-center justify-center text-xl mb-4 border border-teal-600/40">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-2xl font-black mb-2 tracking-tight">Sua segurança vem primeiro.</h3>
+                            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                                A confiança também faz parte de uma boa conexão. Por isso, o IMPACT propõe regras claras para proteger quem doa e quem recebe.
+                            </p>
+                        </div>
+
+                        <!-- Lista de Itens de Segurança -->
+                        <div class="bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 sm:p-8 space-y-5 text-slate-700">
+                            
+                            <div class="flex items-start gap-3.5">
+                                <div class="text-emerald-600 mt-0.5 text-base">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-deepTeal">Perfis identificados</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed mt-0.5">Instituições poderão passar por conferência de dados e documentos antes de receber um selo de perfil verificado.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5">
+                                <div class="text-emerald-600 mt-0.5 text-base">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-deepTeal">Contato com consentimento</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed mt-0.5">Os dados de contato não devem ficar expostos publicamente. A aproximação acontece após o interesse ser aceito.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5">
+                                <div class="text-emerald-600 mt-0.5 text-base">
+                                    <i class="fa-solid fa-ban"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-deepTeal">Sem pagamentos</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed mt-0.5">O IMPACT não cobra taxas, não vende produtos e não solicita transferências para liberar doações.</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3.5">
+                                <div class="text-emerald-600 mt-0.5 text-base">
+                                    <i class="fa-solid fa-flag"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-deepTeal">Denúncia e suporte</h4>
+                                    <p class="text-xs text-slate-500 leading-relaxed mt-0.5">Perfis ou anúncios suspeitos poderão ser denunciados para análise e bloqueio preventivo.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Alerta amarelo inferior -->
+                        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-amber-950 text-xs leading-relaxed shadow-sm">
+                            <p>
+                                <strong>Atenção:</strong> nunca compartilhe senhas, códigos recebidos por SMS, dados bancários ou documentos em conversas. Combine a retirada em local público ou na própria instituição.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Aviso de protótipo inferior -->
+                <div class="mt-8 text-center text-slate-400 text-[11px] max-w-xl mx-auto leading-relaxed">
+                    Recursos de verificação, denúncia e armazenamento seguro são propostas para a versão funcional. Neste protótipo, os dados digitados não são enviados nem salvos.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 6: CENTRAL DE ACESSIBILIDADE -->
+        <section id="screen-acessibilidade" class="screen-view hidden py-16 bg-slate-900 text-white min-h-[80vh]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-amber-500/30">
+                        Inclusão Sem Barreiras
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold">IMPACT para todos</h2>
+                    <p class="text-slate-300 text-base">A inclusão começa quando todos conseguem participar com autonomia.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Leitor de Conteudo -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="w-12 h-12 bg-teal-900 text-teal-300 rounded-xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">LEITOR DE CONTEÚDO</h3>
+                        <p class="text-slate-300 text-sm">Ouça textos, instruções e informações detalhadas da plataforma sintetizados por voz.</p>
+                        <button onclick="switchScreen('modo-audio')" class="w-full bg-midTeal hover:bg-teal-600 text-white font-bold py-2.5 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-headphones"></i> OUVIR MODALIDADE ÁUDIO
+                        </button>
+                    </div>
+
+                    <!-- Libras -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="w-12 h-12 bg-amber-900/60 text-amber-300 rounded-xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-hands-asl-interpreting"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">LIBRAS</h3>
+                        <p class="text-slate-300 text-sm">Acesse a tradução e explicações na Língua Brasileira de Sinais.</p>
+                        <button onclick="toggleLibrasModal()" class="w-full bg-amber-600 hover:bg-amber-700 text-slate-950 font-bold py-2.5 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-hand"></i> VER EM LIBRAS
+                        </button>
+                    </div>
+
+                    <!-- Tamanho do Texto -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="w-12 h-12 bg-emerald-900/60 text-emerald-300 rounded-xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-text-height"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">TAMANHO DO TEXTO</h3>
+                        <p class="text-slate-300 text-sm">Aumente ou diminua a tipografia para facilitar a leitura conforme sua preferência.</p>
+                        <div class="flex items-center justify-center gap-3 bg-slate-900 p-2 rounded-xl border border-slate-700">
+                            <button onclick="changeFontSize(-1)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg text-sm">A−</button>
+                            <button onclick="resetFontSize()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg text-sm">A Normal</button>
+                            <button onclick="changeFontSize(1)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg text-sm">A+</button>
+                        </div>
+                    </div>
+
+                    <!-- Alto Contraste -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="w-12 h-12 bg-indigo-900/60 text-indigo-300 rounded-xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-circle-half-stroke"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">ALTO CONTRASTE</h3>
+                        <p class="text-slate-300 text-sm">Altere o contraste visual da tela para facilitar a identificação dos elementos.</p>
+                        <button onclick="toggleHighContrast()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2 border border-slate-500">
+                            ATIVAR / DESATIVAR CONTRASTE
+                        </button>
+                    </div>
+
+                    <!-- Navegação Facilitada -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="w-12 h-12 bg-sky-900/60 text-sky-300 rounded-xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-keyboard"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">NAVEGAÇÃO FACILITADA</h3>
+                        <p class="text-slate-300 text-sm">Elementos com grandes áreas de toque, navegação via tecla TAB e foco visível ampliado.</p>
+                        <div class="bg-slate-900/80 p-3 rounded-lg text-xs text-sky-200 border border-sky-800">
+                            ✓ Padrão WCAG AA de Acessibilidade
+                        </div>
+                    </div>
+
+                    <!-- Comandos de Voz -->
+                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-4">
+                        <div class="w-12 h-12 bg-rose-900/60 text-rose-300 rounded-xl flex items-center justify-center text-xl font-bold">
+                            <i class="fa-solid fa-microphone"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">COMANDOS DE VOZ</h3>
+                        <p class="text-slate-300 text-sm">Exemplos de navegação falada disponíveis na plataforma:</p>
+                        <div class="bg-slate-900 p-3 rounded-xl space-y-1 text-xs text-slate-300 font-mono">
+                            <p>🗣️ “Quero doar.”</p>
+                            <p>🗣️ “Quero receber.”</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 6: MODO DE ÁUDIO -->
+        <section id="screen-modo-audio" class="screen-view hidden py-16 bg-slate-950 text-white min-h-[80vh]">
+            <div class="max-w-3xl mx-auto px-4">
+                
+                <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800 shadow-2xl space-y-8">
+                    
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                🎧
+                            </div>
+                            <h2 class="text-2xl font-bold">Ouça o IMPACT</h2>
+                        </div>
+                        <span class="text-xs bg-slate-800 text-teal-300 px-3 py-1 rounded-full border border-teal-800">
+                            Assistente Narrador
+                        </span>
+                    </div>
+
+                    <!-- Audio Text Content Display -->
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-3">
+                        <span class="text-xs text-slate-400 font-mono uppercase tracking-wider">Texto Em Transcrição:</span>
+                        <p class="text-lg text-emerald-100 leading-relaxed italic font-light" id="audio-text-display">
+                            “Olá! Você está no IMPACT, uma plataforma que conecta recursos disponíveis a instituições que precisam deles em Itapetininga.”
+                        </p>
+                    </div>
+
+                    <!-- Player Controls -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-center gap-4">
+                            <button onclick="simulaAudio('voltar')" class="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center text-lg transition" title="Voltar Trecho">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button onclick="simulaAudio('play')" id="btn-audio-play" class="w-16 h-16 rounded-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 flex items-center justify-center text-2xl font-bold transition shadow-lg shadow-emerald-500/20" title="Ouvir">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                            <button onclick="simulaAudio('pause')" class="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center text-lg transition" title="Pausar">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button onclick="simulaAudio('replay')" class="w-12 h-12 rounded-full bg-slate-800 hover:bg-slate-700 text-white flex items-center justify-center text-lg transition" title="Ouvir novamente">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                        <p class="text-center text-xs text-slate-400" id="audio-status-label">Status: Pronto para reproduzir áudio</p>
+                    </div>
+
+                    <!-- Voice Navigation Simulator -->
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <h3 class="font-bold text-sm text-teal-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-microphone text-rose-400"></i> Navegação Por Voz Demonstrativa
+                        </h3>
+                        <p class="text-xs text-slate-400">Diga o que você deseja acessar ou clique nos exemplos:</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="comandoVozSimulado('Quero doar')" class="p-3 bg-slate-900 hover:bg-slate-800 rounded-xl border border-slate-800 text-xs text-slate-200 text-left font-mono hover:border-emerald-500 transition">
+                                🗣️ "Quero doar"
+                            </button>
+                            <button onclick="comandoVozSimulado('Quero receber')" class="p-3 bg-slate-900 hover:bg-slate-800 rounded-xl border border-slate-800 text-xs text-slate-200 text-left font-mono hover:border-sky-500 transition">
+                                🗣️ "Quero receber"
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 7: QUERO DOAR (FORMULARIO) -->
+        <section id="screen-quero-doar" class="screen-view hidden py-16 bg-slate-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider bg-teal-100 text-midTeal px-3 py-1 rounded-full">Cadastro de Recurso</span>
+                    <h2 class="text-3xl font-extrabold text-deepTeal">O que você deseja disponibilizar?</h2>
+                    <p class="text-slate-600 text-sm">Escolha uma categoria e preencha as informações do item que está sem uso.</p>
+                </div>
+
+                <!-- Category Cards Selection -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <button onclick="selectCategory(this, 'Livros')" class="category-btn bg-white p-4 rounded-xl border border-slate-200 hover:border-midTeal text-center space-y-2 transition shadow-sm font-semibold text-slate-700 hover:text-midTeal active-cat">
+                        <i class="fa-solid fa-book text-2xl block text-midTeal"></i>
+                        <span class="text-xs">Livros</span>
+                    </button>
+                    <button onclick="selectCategory(this, 'Móveis')" class="category-btn bg-white p-4 rounded-xl border border-slate-200 hover:border-midTeal text-center space-y-2 transition shadow-sm font-semibold text-slate-700 hover:text-midTeal">
+                        <i class="fa-solid fa-chair text-2xl block text-midTeal"></i>
+                        <span class="text-xs">Móveis</span>
+                    </button>
+                    <button onclick="selectCategory(this, 'Equipamentos')" class="category-btn bg-white p-4 rounded-xl border border-slate-200 hover:border-midTeal text-center space-y-2 transition shadow-sm font-semibold text-slate-700 hover:text-midTeal">
+                        <i class="fa-solid fa-laptop text-2xl block text-midTeal"></i>
+                        <span class="text-xs">Equipamentos</span>
+                    </button>
+                    <button onclick="selectCategory(this, 'Materiais Escolares')" class="category-btn bg-white p-4 rounded-xl border border-slate-200 hover:border-midTeal text-center space-y-2 transition shadow-sm font-semibold text-slate-700 hover:text-midTeal">
+                        <i class="fa-solid fa-pen-ruler text-2xl block text-midTeal"></i>
+                        <span class="text-xs">Escolares</span>
+                    </button>
+                    <button onclick="selectCategory(this, 'Materiais Gráficos')" class="category-btn bg-white p-4 rounded-xl border border-slate-200 hover:border-midTeal text-center space-y-2 transition shadow-sm font-semibold text-slate-700 hover:text-midTeal">
+                        <i class="fa-solid fa-print text-2xl block text-midTeal"></i>
+                        <span class="text-xs">Gráficos</span>
+                    </button>
+                    <button onclick="selectCategory(this, 'Outros')" class="category-btn bg-white p-4 rounded-xl border border-slate-200 hover:border-midTeal text-center space-y-2 transition shadow-sm font-semibold text-slate-700 hover:text-midTeal">
+                        <i class="fa-solid fa-box text-2xl block text-midTeal"></i>
+                        <span class="text-xs">Outros</span>
+                    </button>
+                </div>
+
+                <!-- Form Card -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-lg space-y-6">
+                    <form onsubmit="handleDoarSubmit(event)" class="space-y-6">
+                        
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nome do recurso *</label>
+                                <input type="text" id="doar-nome" required placeholder="Ex: 20 Livros Didáticos de Matemática" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Categoria selecionada</label>
+                                <input type="text" id="doar-categoria" readonly value="Livros" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 font-semibold text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Quantidade *</label>
+                                <input type="text" id="doar-quantidade" required placeholder="Ex: 20 unidades / 2 caixas" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Estado de conservação *</label>
+                                <select id="doar-estado" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm bg-white">
+                                    <option value="Excelente / Novo">Excelente / Novo</option>
+                                    <option value="Bom estado de uso">Bom estado de uso</option>
+                                    <option value="Necessita pequenos reparos">Necessita pequenos reparos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Descrição detalhada</label>
+                            <textarea id="doar-descricao" rows="3" placeholder="Descreva mais sobre os itens (ex: livros do 6º ao 9º ano, muito bem conservados)." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm"></textarea>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Localização em Itapetininga *</label>
+                                <input type="text" id="doar-localizacao" required value="Bairro Centro – Itapetininga / SP" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Foto demonstrativa (opcional)</label>
+                                <div class="border-2 border-dashed border-slate-300 rounded-xl p-3 text-center bg-slate-50 text-slate-500 text-xs">
+                                    <i class="fa-solid fa-cloud-arrow-up text-lg text-midTeal block mb-1"></i>
+                                    <span>Simular envio de imagem</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex justify-end">
+                            <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-midTeal to-deepTeal hover:from-teal-700 hover:to-teal-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition">
+                                DISPONIBILIZAR RECURSO
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 8: PRECISO DE RECURSOS (BUSCA & FILTROS) -->
+        <section id="screen-preciso-recursos" class="screen-view hidden py-16 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider bg-sky-100 text-sky-700 px-3 py-1 rounded-full">Painel de Instituições</span>
+                    <h2 class="text-3xl font-extrabold text-deepTeal">Encontre recursos para sua instituição</h2>
+                    <p class="text-slate-600 text-sm">Consulte itens disponíveis disponibilizados pela comunidade e empresas locais.</p>
+                </div>
+
+                <!-- Search & Filters Bar -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-md space-y-4">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-4 text-slate-400"></i>
+                        <input type="text" id="search-input" onkeyup="filterResources()" placeholder="🔎 O que sua instituição precisa? (Ex: livros, mesas, computadores)..." class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-midTeal text-sm">
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                        <select onchange="filterResources()" id="filter-cat" class="p-2.5 rounded-lg border border-slate-300 bg-slate-50 text-slate-700 font-medium">
+                            <option value="">📦 Todas Categorias</option>
+                            <option value="Livros">Livros Didáticos</option>
+                            <option value="Móveis">Móveis Escolares</option>
+                            <option value="Informática">Informática</option>
+                        </select>
+                        <select class="p-2.5 rounded-lg border border-slate-300 bg-slate-50 text-slate-700 font-medium">
+                            <option value="">📍 Região: Itapetininga</option>
+                            <option value="Centro">Centro</option>
+                            <option value="Vila Rio Branco">Vila Rio Branco</option>
+                        </select>
+                        <select class="p-2.5 rounded-lg border border-slate-300 bg-slate-50 text-slate-700 font-medium">
+                            <option value="">📊 Qualquer Quantidade</option>
+                            <option value="Pequeno">Até 10 un</option>
+                            <option value="Grande">Mais de 10 un</option>
+                        </select>
+                        <select class="p-2.5 rounded-lg border border-slate-300 bg-slate-50 text-slate-700 font-medium">
+                            <option value="">🟢 Disponibilidade: Imediata</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Demonstrative Resource Cards -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="resources-grid">
+                    
+                    <!-- Item 1 -->
+                    <div class="resource-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4 flex flex-col justify-between" data-title="20 livros didáticos" data-cat="Livros">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="bg-amber-100 text-amber-800 text-[10px] uppercase font-black px-2.5 py-0.5 rounded-full tracking-wider badge-demo">DADO DEMONSTRATIVO</span>
+                                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full">🟢 Disponível</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-deepTeal">20 Livros Didáticos</h3>
+                            <p class="text-slate-600 text-sm">Coletânea completa de Matemática e Português em ótimo estado de conservação.</p>
+                            <div class="text-xs text-slate-500 space-y-1">
+                                <p><i class="fa-solid fa-location-dot text-midTeal mr-1"></i> Itapetininga – SP (Centro)</p>
+                                <p><i class="fa-solid fa-boxes-stacked text-midTeal mr-1"></i> Qtd: 20 exemplares</p>
+                            </div>
+                        </div>
+                        <button onclick="iniciarConexao('20 Livros Didáticos', 'Empresa Doadora Demonstrativa', 'Centro - Itapetininga')" class="w-full bg-midTeal hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-hand-pointer"></i> TENHO INTERESSE
+                        </button>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="resource-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4 flex flex-col justify-between" data-title="5 mesas escolares" data-cat="Móveis">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="bg-amber-100 text-amber-800 text-[10px] uppercase font-black px-2.5 py-0.5 rounded-full tracking-wider badge-demo">DADO DEMONSTRATIVO</span>
+                                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full">🟢 Disponível</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-deepTeal">5 Mesas Escolares Reforçadas</h3>
+                            <p class="text-slate-600 text-sm">Conjunto de mesas de estudo em madeira e estrutura de aço para sala de aula.</p>
+                            <div class="text-xs text-slate-500 space-y-1">
+                                <p><i class="fa-solid fa-location-dot text-midTeal mr-1"></i> Itapetininga – SP (Vila Rio Branco)</p>
+                                <p><i class="fa-solid fa-boxes-stacked text-midTeal mr-1"></i> Qtd: 5 unidades</p>
+                            </div>
+                        </div>
+                        <button onclick="iniciarConexao('5 Mesas Escolares Reforçadas', 'Escola/Comércio Doador', 'Vila Rio Branco - Itapetininga')" class="w-full bg-midTeal hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-hand-pointer"></i> TENHO INTERESSE
+                        </button>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="resource-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition space-y-4 flex flex-col justify-between" data-title="3 computadores de escritorio" data-cat="Informática">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="bg-amber-100 text-amber-800 text-[10px] uppercase font-black px-2.5 py-0.5 rounded-full tracking-wider badge-demo">DADO DEMONSTRATIVO</span>
+                                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full">🟢 Disponível</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-deepTeal">3 Computadores de Escritório</h3>
+                            <p class="text-slate-600 text-sm">Desktops testados e higienizados, ideais para laboratório de informática comunitário.</p>
+                            <div class="text-xs text-slate-500 space-y-1">
+                                <p><i class="fa-solid fa-location-dot text-midTeal mr-1"></i> Itapetininga – SP (Jardim das Flores)</p>
+                                <p><i class="fa-solid fa-boxes-stacked text-midTeal mr-1"></i> Qtd: 3 computadores</p>
+                            </div>
+                        </div>
+                        <button onclick="iniciarConexao('3 Computadores de Escritório', 'Empresa de TI Parceira', 'Jardim das Flores - Itapetininga')" class="w-full bg-midTeal hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-xl transition text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-hand-pointer"></i> TENHO INTERESSE
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 9: CONEXÃO VISUAL (MATCH) -->
+        <section id="screen-conexao" class="screen-view hidden py-16 bg-slate-900 text-white min-h-[80vh]">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <div class="text-center space-y-3">
+                    <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full border border-emerald-500/30">
+                        Match Realizado!
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold">Encontramos uma possível conexão!</h2>
+                    <p class="text-slate-300 text-sm">O IMPACT ligou o doador diretamente à sua necessidade.</p>
+                </div>
+
+                <!-- Match Visualization Diagram -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 shadow-2xl space-y-8">
+                    
+                    <div class="grid md:grid-cols-3 gap-6 items-center text-center">
+                        
+                        <!-- Doador -->
+                        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 space-y-2">
+                            <div class="w-12 h-12 bg-teal-900 text-teal-300 rounded-xl flex items-center justify-center text-xl font-bold mx-auto">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                            <span class="text-xs text-teal-400 font-bold uppercase">Doador</span>
+                            <h4 class="font-bold text-white text-base" id="match-doador-nome">Comércio Doador</h4>
+                            <p class="text-xs text-slate-400" id="match-doador-loc">Itapetininga – SP</p>
+                        </div>
+
+                        <!-- Recurso Em Transferencia -->
+                        <div class="bg-gradient-to-r from-teal-900 to-emerald-900 p-6 rounded-2xl border border-emerald-500/50 space-y-2 shadow-lg">
+                            <div class="w-12 h-12 bg-emerald-500 text-slate-950 rounded-xl flex items-center justify-center text-xl font-bold mx-auto">
+                                <i class="fa-solid fa-box-open"></i>
+                            </div>
+                            <span class="text-xs text-emerald-300 font-bold uppercase">Recurso Vinculado</span>
+                            <h4 class="font-bold text-white text-base" id="match-recurso-nome">20 Livros Didáticos</h4>
+                            <span class="inline-block bg-emerald-950 text-emerald-300 text-[10px] px-2 py-0.5 rounded border border-emerald-700">Disponibilidade Confirmada</span>
+                        </div>
+
+                        <!-- Instituição -->
+                        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 space-y-2">
+                            <div class="w-12 h-12 bg-sky-900 text-sky-300 rounded-xl flex items-center justify-center text-xl font-bold mx-auto">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <span class="text-xs text-sky-400 font-bold uppercase">Instituição Beneficiada</span>
+                            <h4 class="font-bold text-white text-base">Instituição Demonstrativa</h4>
+                            <p class="text-xs text-slate-400">Itapetininga – SP</p>
+                        </div>
+
+                    </div>
+
+                    <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1">
+                        <p><strong>Status da Conexão:</strong> Pré-aprovada na plataforma.</p>
+                        <p><strong>Próxima etapa:</strong> Agendamento e combinados para entrega / retirada local.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                        <button onclick="switchScreen('acompanhamento')" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 px-6 rounded-xl transition text-center text-sm shadow-lg shadow-emerald-500/20">
+                            CONTINUAR CONEXÃO <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 10: ACOMPANHAMENTO (TIMELINE) -->
+        <section id="screen-acompanhamento" class="screen-view hidden py-16 bg-slate-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="text-center space-y-2">
+                    <span class="text-xs font-bold uppercase tracking-wider bg-teal-100 text-midTeal px-3 py-1 rounded-full">Transparência e acompanhamento</span>
+                    <h2 class="text-3xl font-extrabold text-deepTeal">Acompanhe sua conexão</h2>
+                    <p class="text-slate-600 text-sm">Consulte cada etapa, registre a previsão combinada e confirme o recebimento.</p>
+                </div>
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xl space-y-6">
+                    <div class="flex flex-wrap justify-between gap-3 items-start">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-widest font-black text-midTeal">Conexão demonstrativa</span>
+                            <h3 class="text-xl font-bold text-deepTeal" id="tracking-item">20 livros didáticos</h3>
+                            <p class="text-xs text-slate-500 mt-1">Doadora: Mariana • Beneficiária: Instituição Aprender</p>
+                        </div>
+                        <span id="tracking-status" class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">Aguardando recebimento</span>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <label class="text-xs font-bold text-slate-600">Data prevista combinada
+                            <input id="delivery-date" type="date" class="mt-2 w-full border border-slate-300 rounded-xl px-3 py-3 text-sm">
+                        </label>
+                        <div class="rounded-xl bg-teal-50 border border-teal-100 p-4">
+                            <span class="text-xs text-teal-800 font-bold">Previsão registrada</span>
+                            <p id="delivery-countdown" class="text-lg font-black text-deepTeal mt-1">Defina uma data</p>
+                            <p class="text-[11px] text-slate-600 mt-1">A contagem considera a data informada pelos participantes.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4" id="tracking-timeline">
+                        <div class="flex gap-3"><span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">✓</span><div><b class="text-sm text-deepTeal">1. Conexão iniciada</b><p class="text-xs text-slate-500">O beneficiário demonstrou interesse no recurso.</p></div></div>
+                        <div class="flex gap-3"><span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">✓</span><div><b class="text-sm text-deepTeal">2. Conexão aceita</b><p class="text-xs text-slate-500">As partes aceitaram iniciar o contato.</p></div></div>
+                        <div class="flex gap-3"><span class="w-8 h-8 rounded-full bg-midTeal text-white flex items-center justify-center shrink-0">3</span><div><b class="text-sm text-deepTeal">3. Data combinada</b><p class="text-xs text-slate-500">Doador e beneficiário registram a previsão da retirada ou entrega.</p></div></div>
+                        <div class="flex gap-3"><span id="recipient-step-icon" class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center shrink-0">4</span><div><b class="text-sm text-deepTeal">4. Recebimento confirmado</b><p class="text-xs text-slate-500">O beneficiário confirma que recebeu os itens.</p></div></div>
+                        <div class="flex gap-3"><span id="donor-step-icon" class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center shrink-0">5</span><div><b class="text-sm text-deepTeal">5. Doação concluída</b><p class="text-xs text-slate-500">O doador confirma a realização da entrega e o registro é finalizado.</p></div></div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <button onclick="confirmarRecebimento()" id="btn-recipient-confirm" class="bg-sky-700 hover:bg-sky-800 text-white font-bold rounded-xl py-3 px-4 text-sm">Beneficiário: confirmar recebimento</button>
+                        <button onclick="confirmarEntrega()" id="btn-donor-confirm" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl py-3 px-4 text-sm">Doador: confirmar entrega</button>
+                    </div>
+                    <p class="text-[11px] text-slate-500 bg-slate-50 border border-slate-200 rounded-xl p-3">O IMPACT não realiza, transporta nem armazena os itens. A logística é combinada diretamente entre os participantes. Nesta demonstração, os botões simulam as confirmações de cada parte.</p>
+                    <div class="flex flex-wrap justify-between gap-3 pt-3 border-t border-slate-100">
+                        <button onclick="switchScreen('preciso-recursos')" class="text-xs font-bold text-slate-500">← Voltar aos recursos</button>
+                        <button onclick="switchScreen('meu-impacto')" class="bg-deepTeal text-white text-xs font-bold px-5 py-3 rounded-lg">Ver Meu Painel →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 12: MEU IMPACTO & CONQUISTAS -->
+        <section id="screen-meu-impacto" class="screen-view hidden py-16 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div class="text-center space-y-2"><span class="text-xs font-bold uppercase tracking-wider bg-teal-100 text-midTeal px-3 py-1 rounded-full">Painel pessoal</span><h2 class="text-3xl font-extrabold text-deepTeal">Meu Painel</h2><p class="text-slate-600 text-sm">Acompanhe suas conexões, contribuições e conquistas no IMPACT.</p></div>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border text-center"><strong id="stat-items" class="text-3xl text-deepTeal block">10</strong><span class="text-[10px] uppercase font-bold text-slate-500">Itens destinados</span></div>
+                    <div class="bg-white p-5 rounded-2xl border text-center"><strong id="stat-connections" class="text-3xl text-deepTeal block">4</strong><span class="text-[10px] uppercase font-bold text-slate-500">Conexões concluídas</span></div>
+                    <div class="bg-white p-5 rounded-2xl border text-center"><strong id="stat-institutions" class="text-3xl text-deepTeal block">2</strong><span class="text-[10px] uppercase font-bold text-slate-500">Instituições apoiadas</span></div>
+                    <div class="bg-white p-5 rounded-2xl border text-center"><strong id="stat-pending" class="text-3xl text-deepTeal block">1</strong><span class="text-[10px] uppercase font-bold text-slate-500">Aguardando recebimento</span></div>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl border shadow-sm space-y-5">
+                        <div><h3 class="text-xl font-bold text-deepTeal">Metas e conquistas</h3><p class="text-xs text-slate-500">O reconhecimento considera apenas conexões concluídas e confirmadas pelas duas partes.</p></div>
+                        <div class="space-y-4" id="goals-list">
+                            <div><div class="flex justify-between text-xs font-bold"><span>1. Perfil completo</span><span class="text-emerald-700">Concluída</span></div><div class="h-2 bg-slate-100 rounded-full mt-2"><div class="h-2 bg-emerald-500 rounded-full w-full"></div></div></div>
+                            <div><div class="flex justify-between text-xs font-bold"><span>2. Primeira conexão concluída</span><span class="text-emerald-700">Concluída</span></div><div class="h-2 bg-slate-100 rounded-full mt-2"><div class="h-2 bg-emerald-500 rounded-full w-full"></div></div></div>
+                            <div><div class="flex justify-between text-xs font-bold"><span>3. Destinar 10 itens</span><span id="goal-items-label">10 / 10</span></div><div class="h-2 bg-slate-100 rounded-full mt-2"><div id="goal-items-bar" class="h-2 bg-emerald-500 rounded-full" style="width:100%"></div></div></div>
+                            <div><div class="flex justify-between text-xs font-bold"><span>4. Apoiar 3 instituições diferentes</span><span id="goal-institutions-label">2 / 3</span></div><div class="h-2 bg-slate-100 rounded-full mt-2"><div id="goal-institutions-bar" class="h-2 bg-midTeal rounded-full" style="width:66%"></div></div></div>
+                            <div><div class="flex justify-between text-xs font-bold"><span>5. Concluir 5 conexões</span><span id="goal-connections-label">4 / 5</span></div><div class="h-2 bg-slate-100 rounded-full mt-2"><div id="goal-connections-bar" class="h-2 bg-softGold rounded-full" style="width:80%"></div></div></div>
+                        </div>
+                        <div class="bg-teal-50 border border-teal-100 rounded-xl p-4"><p class="text-xs text-teal-900 font-bold" id="journey-message">Você está perto de completar sua jornada! Falta apoiar mais uma instituição e concluir mais uma conexão.</p></div>
+                        <div class="flex flex-wrap gap-3"><button onclick="simularConquista()" class="bg-midTeal hover:bg-teal-700 text-white text-xs font-bold px-4 py-3 rounded-xl">Simular nova conexão concluída</button><button onclick="switchScreen('acompanhamento')" class="border border-midTeal text-midTeal text-xs font-bold px-4 py-3 rounded-xl">Acompanhar entrega</button></div>
+                    </div>
+                    <div class="bg-deepTeal text-white p-6 rounded-2xl space-y-4">
+                        <div class="rounded-2xl border border-amber-300/40 bg-gradient-to-br from-[#123e49] via-[#0d2b3a] to-[#071c27] p-5 text-center shadow-xl relative overflow-hidden">
+                            <div class="absolute -right-8 -top-8 w-28 h-28 rounded-full border border-amber-300/20"></div><div class="absolute -left-8 -bottom-8 w-24 h-24 rounded-full border border-emerald-300/20"></div>
+                            <div class="relative"><div class="mx-auto w-16 h-16 rounded-full border-2 border-amber-300/80 bg-gradient-to-br from-amber-200 to-amber-500 text-deepTeal flex items-center justify-center text-3xl shadow-lg">✦</div>
+                            <p class="text-[10px] tracking-[.25em] uppercase text-amber-200 mt-3">Reconhecimento especial</p><h3 class="text-2xl font-black tracking-wide text-white mt-1">IMPACT</h3><p class="text-xs text-teal-100 mt-1">Certificado de Jornada</p>
+                            <div class="my-4 border-y border-amber-200/25 py-3"><p class="text-[10px] uppercase tracking-widest text-teal-200">Uma trajetória construída com</p><p class="text-sm font-semibold text-white mt-1">Conexões • Conquistas • Transformação</p></div></div>
+                            <div id="certificate-locked" class="relative bg-slate-950/50 border border-amber-200/30 rounded-xl p-4"><span class="text-amber-200 text-xs font-bold tracking-wider">✧ EM CONSTRUÇÃO ✧</span><p class="text-xs text-slate-200 mt-2">Complete as cinco metas para revelar seu certificado personalizado.</p></div>
+                            <div id="certificate-ready" class="hidden relative space-y-3"><span class="text-emerald-200 text-xs font-bold tracking-wider">✦ SUA JORNADA FOI CONCLUÍDA ✦</span><button onclick="abrirCertificado()" class="w-full bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-300 hover:brightness-105 text-deepTeal font-black py-3 rounded-xl text-sm shadow-lg">✧ Revelar meu certificado</button><label class="flex gap-2 text-xs text-teal-100 text-left"><input type="checkbox" id="public-optin"> Autorizo aparecer nos Destaques da Comunidade.</label><button onclick="publicarDestaque()" class="w-full border border-teal-300/70 hover:bg-white/10 py-2 rounded-lg text-xs font-bold">Salvar minha autorização</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4"><div><h3 class="text-xl font-bold text-deepTeal">Histórico de atividades</h3><p class="text-xs text-slate-500">Veja o que já foi concluído e o que ainda está em andamento.</p></div><div class="overflow-x-auto"><table class="w-full text-left text-xs"><thead class="text-slate-500 border-b"><tr><th class="py-3">Atividade</th><th>Status</th><th>Data</th></tr></thead><tbody id="activity-history"><tr class="border-b"><td class="py-3 font-semibold">Livros didáticos — Instituição Aprender</td><td class="text-amber-700 font-bold">Aguardando recebimento</td><td>Em andamento</td></tr><tr class="border-b"><td class="py-3 font-semibold">Materiais escolares — Escola Esperança</td><td class="text-emerald-700 font-bold">Concluída</td><td>10/10/2026</td></tr><tr><td class="py-3 font-semibold">Mobiliário — Centro Comunitário</td><td class="text-emerald-700 font-bold">Concluída</td><td>22/09/2026</td></tr></tbody></table></div></div>
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4"><div><h3 class="text-xl font-bold text-deepTeal">Destaques da Comunidade</h3><p class="text-xs text-slate-500">Participantes que concluíram suas jornadas e autorizaram a divulgação.</p></div><div id="community-highlights" class="grid sm:grid-cols-2 gap-4"><div class="rounded-xl bg-slate-50 border p-4"><span class="text-[10px] font-black text-midTeal uppercase">Exemplo fictício</span><h4 class="font-bold text-deepTeal mt-1">Participante exemplo</h4><p class="text-xs text-slate-600">Jornada concluída • 5 conexões • 3 instituições apoiadas</p></div></div></div>
+                <p class="text-[11px] text-slate-500 text-center">Protótipo acadêmico: dados e interações demonstrativos. Em uma versão de produção, o histórico dependerá de registros reais e confirmações dos participantes.</p>
+            </div>
+        </section>
+
+        <!-- SCREEN 13: HISTÓRIAS DE IMPACTO (ATUALIZADO CONFORME REFERÊNCIA) -->
+        <section id="screen-historias" class="screen-view hidden py-16 bg-slate-50 min-h-[85vh] flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-10">
+                
+                <!-- Cabeçalho Principal -->
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-[11px] font-black uppercase tracking-widest bg-amber-100 text-amber-800 px-3.5 py-1 rounded-full">
+                        História ilustrativa
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-deepTeal tracking-tight">
+                        Uma doação pode abrir novos caminhos.
+                    </h2>
+                    <p class="text-slate-500 text-base leading-relaxed">
+                        Conheça uma simulação de como uma pessoa participa do IMPACT, acompanha uma conexão e recebe o reconhecimento pela contribuição.
+                    </p>
+                </div>
+
+                <!-- Grid com 2 colunas -->
+                <div class="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+                    
+                    <!-- LEFT COLUMN: A história da Mariana (7 cols) -->
+                    <div class="lg:col-span-7 bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 sm:p-10 space-y-6 flex flex-col justify-between">
+                        <div>
+                            <!-- Badge Card Fictício -->
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-deepTeal text-teal-200 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-lg">
+                                    Card fictício • Itapetininga – SP
+                                </span>
+                                <i class="fa-solid fa-book-open text-midTeal text-xl"></i>
+                            </div>
+
+                            <h3 class="text-2xl sm:text-3xl font-black text-deepTeal tracking-tight mb-2">
+                                A história da Mariana
+                            </h3>
+                            <p class="text-slate-400 text-xs sm:text-sm font-medium mb-6">
+                                Do espaço em casa para novas possibilidades de aprendizagem.
+                            </p>
+
+                            <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                                <p>
+                                    Mariana, uma moradora fictícia de Itapetininga, percebeu que tinha livros didáticos e paradidáticos em bom estado que já não utilizava. Em vez de deixá-los guardados, decidiu criar seu perfil de doadora no IMPACT.
+                                </p>
+                                <p>
+                                    Depois de concluir o cadastro demonstrativo, ela publicou <strong class="text-deepTeal">18 livros</strong>, informou o estado de conservação e adicionou fotos. Alguns dias depois, uma instituição fictícia chamada <strong class="text-deepTeal">Projeto Sementes</strong> encontrou o anúncio e manifestou interesse.
+                                </p>
+                                <p>
+                                    Pelo canal de contato disponibilizado, Mariana e a instituição conversaram diretamente, combinaram os detalhes da retirada e realizaram a entrega por conta própria. Após a conclusão, os dois lados registraram a confirmação no exemplo de acompanhamento do IMPACT.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Rodapé verde dentro do card -->
+                        <div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-4 text-emerald-950 text-xs leading-relaxed mt-6">
+                            <p>
+                                💚 <strong>O resultado:</strong> 18 livros ganharam a oportunidade de ser utilizados por outras pessoas. O IMPACT aproximou os participantes e registrou a conclusão informada por eles; não realizou nem transportou a doação.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Jornada da Participante (5 cols) -->
+                    <div class="lg:col-span-5 bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 sm:p-8 space-y-6">
+                        
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-600 block mb-1">
+                                Jornada da participante
+                            </span>
+                            <h4 class="text-xl font-black text-deepTeal tracking-tight">
+                                Como aparece no sistema
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-0.5">
+                                Exemplo de interação, etapa por etapa.
+                            </p>
+                        </div>
+
+                        <!-- Passos da Jornada -->
+                        <div class="space-y-4">
+                            
+                            <!-- Passo 1 -->
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                                    1
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm text-deepTeal">Cadastro concluído</h5>
+                                    <p class="text-xs text-slate-500 mt-0.5">Mariana cria seu perfil de doadora.</p>
+                                </div>
+                            </div>
+
+                            <!-- Passo 2 -->
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                                    2
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm text-deepTeal">Recurso publicado</h5>
+                                    <p class="text-xs text-slate-500 mt-0.5">18 livros cadastrados com descrição e fotos.</p>
+                                </div>
+                            </div>
+
+                            <!-- Passo 3 -->
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                                    3
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm text-deepTeal">Interesse recebido</h5>
+                                    <p class="text-xs text-slate-500 mt-0.5">Projeto Sementes entra em contato.</p>
+                                </div>
+                            </div>
+
+                            <!-- Passo 4 -->
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                                    4
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm text-deepTeal">Conclusão confirmada</h5>
+                                    <p class="text-xs text-slate-500 mt-0.5">Ambas as partes registram a conclusão.</p>
+                                </div>
+                            </div>
+
+                            <!-- Passo 5 -->
+                            <div class="flex items-start gap-3.5">
+                                <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                                    5
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-xs sm:text-sm text-deepTeal">Reconhecimento liberado</h5>
+                                    <p class="text-xs text-slate-500 mt-0.5">Certificado demonstrativo disponível no perfil.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Botão de Ação -->
+                        <div class="pt-2">
+                            <button onclick="switchScreen('meu-impacto')" class="w-full py-3.5 bg-deepTeal hover:bg-teal-900 text-white font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-award text-amber-400"></i> Ver perfil e certificado
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 14: IMPACTO EM ITAPETININGA (MAPA ESTILIZADO) -->
+        <section id="screen-mapa-itapetininga" class="screen-view hidden py-16 bg-slate-900 text-white min-h-[85vh]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <div class="text-center space-y-2">
+                    <span class="bg-teal-500/20 text-teal-300 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-teal-500/30">
+                        Visão Geográfica
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold">Impacto em Itapetininga</h2>
+                    <p class="text-slate-300 text-sm">Representação visual das conexões e instituições locais.</p>
+                </div>
+
+                <!-- Stylized Map Canvas Display -->
+                <div class="bg-slate-950 rounded-3xl border border-slate-800 p-6 shadow-2xl relative overflow-hidden">
+                    
+                    <!-- Map Controls Legend Header -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800 text-xs">
+                        <div class="flex items-center gap-4">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> Instituições</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-400 inline-block"></span> Empresas/Comércios</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Conexões Ativas</span>
+                        </div>
+                        <span class="bg-slate-800 text-teal-300 text-[11px] px-3 py-1 rounded-full">Itapetininga / SP</span>
+                    </div>
+
+                    <!-- Visual Nodes Map Box -->
+                    <div class="h-80 sm:h-96 relative flex items-center justify-center my-4 rounded-2xl bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border border-slate-800/80 p-4 overflow-hidden">
+                        
+                        <!-- Grid Background Lines -->
+                        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#1d7a8c_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+                        <!-- Stylized City Outline Representation -->
+                        <div class="absolute inset-10 border border-teal-800/40 rounded-full opacity-30 pointer-events-none"></div>
+
+                        <!-- Interactive Nodes -->
+                        <!-- Node 1: Centro -->
+                        <div class="absolute top-1/3 left-1/3 text-center cursor-pointer group" onclick="showNodeInfo('Centro (Comércios & Doador)')">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto pulse-node shadow-lg">
+                                <i class="fa-solid fa-building text-emerald-400 text-xs"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-emerald-300 block mt-1 bg-slate-900/90 px-1.5 py-0.5 rounded">Centro</span>
+                        </div>
+
+                        <!-- Node 2: Vila Rio Branco -->
+                        <div class="absolute top-1/2 left-2/3 text-center cursor-pointer group" onclick="showNodeInfo('Vila Rio Branco (Instituições)')">
+                            <div class="w-8 h-8 rounded-full bg-sky-500/20 border-2 border-sky-400 flex items-center justify-center mx-auto pulse-node shadow-lg">
+                                <i class="fa-solid fa-school text-sky-400 text-xs"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-sky-300 block mt-1 bg-slate-900/90 px-1.5 py-0.5 rounded">Vila Rio Branco</span>
+                        </div>
+
+                        <!-- Node 3: Jardim das Flores -->
+                        <div class="absolute bottom-1/4 left-1/2 text-center cursor-pointer group" onclick="showNodeInfo('Jardim das Flores (Conexão comunitária)')">
+                            <div class="w-8 h-8 rounded-full bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center mx-auto pulse-node shadow-lg">
+                                <i class="fa-solid fa-hands-holding-circle text-amber-400 text-xs"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-amber-300 block mt-1 bg-slate-900/90 px-1.5 py-0.5 rounded">Jardim das Flores</span>
+                        </div>
+
+                        <!-- Connection Line SVG Overlay -->
+                        <svg class="absolute inset-0 w-full h-full pointer-events-none stroke-teal-500/40" stroke-width="1.5" stroke-dasharray="4 4">
+                            <line x1="33%" y1="33%" x2="66%" y2="50%" />
+                            <line x1="66%" y1="50%" x2="50%" y2="75%" />
+                            <line x1="33%" y1="33%" x2="50%" y2="75%" />
+                        </svg>
+
+                        <div class="absolute bottom-3 left-3 bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl text-[11px] text-slate-300" id="node-info-box">
+                            💡 Clique em um ponto do mapa para simular a visualização do bairro.
+                        </div>
+
+                    </div>
+
+                    <!-- Real Zero Counters -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-800 text-center">
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-black text-emerald-400 block">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Recursos Destinados</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-black text-sky-400 block">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Instituições Atendidas</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-black text-amber-400 block">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Conexões Realizadas</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-2xl font-black text-teal-300 block">0</span>
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Participantes</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <span class="text-[10px] text-amber-400/90 font-mono">DADOS DEMONSTRATIVOS • FASE DE PROTÓTIPO</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 15: SOBRE O IMPACT -->
+        <section id="screen-como-funciona-sobre" class="screen-view hidden py-16 bg-slate-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                
+                <div class="text-center space-y-3">
+                    <span class="text-xs font-bold uppercase tracking-wider bg-teal-100 text-midTeal px-3 py-1 rounded-full">Manifesto e Propósito</span>
+                    <h2 class="text-3xl font-extrabold text-deepTeal">Por que o IMPACT existe?</h2>
+                    <p class="text-slate-600 text-base">
+                        “Muitos recursos ainda possuem valor mesmo quando deixam de ser úteis para quem os possui.”
+                    </p>
+                </div>
+
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl space-y-8">
+                    
+                    <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                        <p>
+                            A plataforma IMPACT nasce para preencher a lacuna entre a sobra de materiais parados em empresas e comércios e a escassez vivenciada por instituições sociais em Itapetininga.
+                        </p>
+                        <p>
+                            Não se trata de um simples site de doações passivas, mas de uma verdadeira <strong>rede local de colaboração</strong> que aproxima participantes e permite registrar o andamento das conexões e as confirmações de recebimento.
+                        </p>
+                    </div>
+
+                    <!-- Diagram Visual -->
+                    <div class="p-6 bg-slate-900 text-white rounded-2xl space-y-4 text-center font-semibold text-xs sm:text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 items-center">
+                            <span class="p-2 bg-slate-800 rounded border border-slate-700">QUEM TEM</span>
+                            <span class="text-emerald-400">↓</span>
+                            <span class="p-2 bg-slate-800 rounded border border-slate-700">O QUE ESTÁ DISPONÍVEL</span>
+                            <span class="text-emerald-400">↓</span>
+                            <span class="p-2 bg-slate-800 rounded border border-slate-700">QUEM PRECISA</span>
+                        </div>
+                        <div class="pt-2 text-emerald-400 font-bold text-base">
+                            ↓ A CONEXÃO → O IMPACTO LOCAL ↓
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <p class="text-lg font-bold text-deepTeal italic">
+                            “Começamos por Itapetininga, uma conexão por vez.”
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SCREEN 16: TELA FINAL (CALL TO ACTION) -->
+        <section id="screen-tela-final" class="screen-view hidden py-20 bg-deepTeal text-white itapetininga-bg min-h-[85vh] flex items-center">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10">
+                
+                <div class="space-y-4">
+                    <span class="bg-emerald-500 text-slate-950 font-black text-xs uppercase px-4 py-1.5 rounded-full tracking-widest">
+                        O Primeiro Passo
+                    </span>
+                    <h2 class="text-4xl sm:text-5xl font-black">O impacto começa com uma escolha.</h2>
+                    <p class="text-2xl text-teal-100 font-light italic">
+                        O que você pode transformar hoje?
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
+                    
+                    <button onclick="switchScreen('quero-doar')" class="p-6 rounded-2xl bg-teal-900/80 hover:bg-emerald-500 hover:text-slate-950 border border-teal-700 transition space-y-2 group card-interactive">
+                        <i class="fa-solid fa-store text-2xl text-emerald-400 group-hover:text-slate-950"></i>
+                        <span class="block font-bold text-base">Doar</span>
+                    </button>
+
+                    <button onclick="switchScreen('preciso-recursos')" class="p-6 rounded-2xl bg-teal-900/80 hover:bg-sky-500 hover:text-slate-950 border border-teal-700 transition space-y-2 group card-interactive">
+                        <i class="fa-solid fa-school text-2xl text-sky-400 group-hover:text-slate-950"></i>
+                        <span class="block font-bold text-base">Receber</span>
+                    </button>
+
+                    <button onclick="switchScreen('meu-impacto')" class="p-6 rounded-2xl bg-teal-900/80 hover:bg-amber-500 hover:text-slate-950 border border-teal-700 transition space-y-2 group card-interactive">
+                        <i class="fa-solid fa-award text-2xl text-amber-400 group-hover:text-slate-950"></i>
+                        <span class="block font-bold text-base">Meu Painel</span>
+                    </button>
+
+                    <button onclick="switchScreen('historias')" class="p-6 rounded-2xl bg-teal-900/80 hover:bg-teal-300 hover:text-slate-950 border border-teal-700 transition space-y-2 group card-interactive">
+                        <i class="fa-solid fa-earth-americas text-2xl text-teal-300 group-hover:text-slate-950"></i>
+                        <span class="block font-bold text-base">Conhecer</span>
+                    </button>
+
+                </div>
+
+                <div class="pt-8 border-t border-teal-800/80">
+                    <p class="text-sm text-teal-200 font-medium">
+                        IMPACT — Conectando recursos. Transformando Itapetininga.
+                    </p>
+                    <p class="text-xs text-teal-400 mt-1">
+                        Doe. Conecte. Transforme.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 text-xs py-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 font-bold flex items-center justify-center">I</div>
+                    <div>
+                        <span class="font-bold text-white text-base tracking-wider">IMPACT</span>
+                        <p class="text-[11px] text-slate-500">Conectando recursos. Transformando Itapetininga.</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 text-slate-400">
+                    <button onclick="switchScreen('inicio')" class="hover:text-white transition">Início</button>
+                    <button onclick="switchScreen('como-funciona')" class="hover:text-white transition">Como Funciona</button>
+                    <button onclick="switchScreen('acessibilidade')" class="hover:text-white transition">Acessibilidade</button>
+                    <button onclick="switchScreen('mapa-itapetininga')" class="hover:text-white transition">Itapetininga</button>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500 gap-2">
+                <p>© 2026 IMPACT — Protótipo de Apresentação Acadêmica (Itapetininga - SP).</p>
+                <p class="bg-slate-900 px-3 py-1 rounded text-amber-400 font-mono">Ambiente Demonstrativo Sem Backend</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LIBRAS INTERPRETER OVERLAY MODAL -->
+    <div id="libras-modal" class="fixed bottom-4 right-4 z-50 hidden bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border-2 border-amber-500 w-72 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-hands-asl-interpreting"></i> Intérprete de Libras
+            </span>
+            <button onclick="toggleLibrasModal()" class="text-slate-400 hover:text-white text-xs font-bold">✕</button>
+        </div>
+
+        <!-- Libras Visual Placeholder -->
+        <div class="bg-slate-950 rounded-xl h-48 flex flex-col items-center justify-center p-3 text-center border border-slate-800 relative">
+            <div class="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl font-bold mb-2 animate-bounce">
+                🤟
+            </div>
+            <p class="text-xs font-bold text-slate-200">Área do Intérprete de Libras</p>
+            <p class="text-[10px] text-slate-400 mt-1">Representação visual do avatar/vídeo em Língua Brasileira de Sinais.</p>
+        </div>
+
+        <div class="text-[10px] text-slate-400 text-center">
+            Protótipo de acessibilidade para tradução em tempo real.
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST POPUP CONTAINER -->
+    <div id="toast-notification" class="fixed top-20 right-4 z-50 hidden bg-slate-900 text-white p-4 rounded-xl shadow-2xl border-l-4 border-emerald-500 text-xs space-y-1 max-w-sm">
+        <p class="font-bold text-emerald-400" id="toast-title">Aviso da Plataforma</p>
+        <p class="text-slate-200" id="toast-message">Mensagem realizada no protótipo com sucesso!</p>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // GLOBAL STATE & FONTS
+        let currentFontSizeLevel = 0; // -1, 0, +1
+        let isHighContrast = false;
+
+        // SCREEN NAVIGATION FUNCTION
+        function switchScreen(screenId) {
+            // Hide all screen views
+            const screens = document.querySelectorAll('.screen-view');
+            screens.forEach(screen => {
+                screen.classList.add('hidden');
+                screen.classList.remove('active');
+            });
+
+            // Target screen element
+            const targetScreen = document.getElementById(`screen-${screenId}`) || document.getElementById('screen-inicio');
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                targetScreen.classList.add('active');
+            }
+
+            // Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // MOBILE MENU TOGGLE
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // HIGH CONTRAST TOGGLE
+        function toggleHighContrast() {
+            isHighContrast = !isHighContrast;
+            if (isHighContrast) {
+                document.body.classList.add('high-contrast');
+                showToast('Acessibilidade', 'Modo Alto Contraste Ativado!');
+            } else {
+                document.body.classList.remove('high-contrast');
+                showToast('Acessibilidade', 'Modo Normal Restaurado.');
+            }
+        }
+
+        // FONT RESIZER
+        function changeFontSize(direction) {
+            currentFontSizeLevel += direction;
+            if (currentFontSizeLevel > 2) currentFontSizeLevel = 2;
+            if (currentFontSizeLevel < -1) currentFontSizeLevel = -1;
+
+            const fontSizes = {
+                '-1': '14px',
+                '0': '16px',
+                '1': '18px',
+                '2': '20px'
+            };
+
+            document.documentElement.style.fontSize = fontSizes[currentFontSizeLevel];
+            showToast('Acessibilidade', `Tamanho do texto alterado (Nível ${currentFontSizeLevel})`);
+        }
+
+        function resetFontSize() {
+            currentFontSizeLevel = 0;
+            document.documentElement.style.fontSize = '16px';
+            showToast('Acessibilidade', 'Tamanho do texto restaurado.');
+        }
+
+        // LIBRAS MODAL TOGGLE
+        function toggleLibrasModal() {
+            const modal = document.getElementById('libras-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // AUDIO ASSISTANT SIMULATION
+        function simulaAudio(action) {
+            const statusLabel = document.getElementById('audio-status-label');
+            const playBtn = document.getElementById('btn-audio-play');
+
+            if (action === 'play') {
+                statusLabel.innerText = "Status: Reproduzindo texto com voz sintetizada...";
+                playBtn.classList.add('animate-pulse');
+                showToast('Modo Áudio', 'Reproduzindo narração do texto!');
+            } else if (action === 'pause') {
+                statusLabel.innerText = "Status: Áudio pausado.";
+                playBtn.classList.remove('animate-pulse');
+            } else if (action === 'replay') {
+                statusLabel.innerText = "Status: Reiniciando leitura do trecho...";
+            } else if (action === 'voltar') {
+                statusLabel.innerText = "Status: Voltando 10 segundos no trecho.";
+            }
+        }
+
+        // VOICE COMMAND SIMULATOR
+        function comandoVozSimulado(comando) {
+            showToast('Comando de Voz', `Comando reconhecido: "${comando}"`);
+            if (comando.includes('doar')) {
+                switchScreen('quero-doar');
+            } else if (comando.includes('receber')) {
+                switchScreen('preciso-recursos');
+            }
+        }
+
+        // CATEGORY SELECTION IN FORM
+        function selectCategory(buttonElement, categoryName) {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-midTeal', 'bg-teal-50'));
+            buttonElement.classList.add('ring-2', 'ring-midTeal', 'bg-teal-50');
+            document.getElementById('doar-categoria').value = categoryName;
+        }
+
+        // DOAR FORM SUBMISSION
+        function handleDoarSubmit(event) {
+            event.preventDefault();
+            const nome = document.getElementById('doar-nome').value;
+            showToast('Recurso Cadastrado!', `O item "${nome}" foi registrado com sucesso no protótipo.`);
+            
+            // Redirect to connection screen after delay
+            setTimeout(() => {
+                iniciarConexao(nome, 'Seu Perfil Doador', 'Itapetininga - SP');
+            }, 1000);
+        }
+
+        // RESOURCE SEARCH FILTER
+        function filterResources() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cat = document.getElementById('filter-cat').value;
+            const cards = document.querySelectorAll('.resource-card');
+
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                const cardCat = card.getAttribute('data-cat');
+
+                const matchesQuery = title.includes(query);
+                const matchesCat = cat === '' || cardCat === cat;
+
+                if (matchesQuery && matchesCat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // INITIATE CONNECTION MATCH
+        function iniciarConexao(recursoNome, doadorNome, localizacao) {
+            document.getElementById('match-recurso-nome').innerText = recursoNome;
+            document.getElementById('match-doador-nome').innerText = doadorNome;
+            document.getElementById('match-doador-loc').innerText = localizacao;
+            switchScreen('conexao');
+        }
+
+        function handleCadastroParticipante(event) {
+            event.preventDefault();
+            const senha = document.getElementById('cadastro-senha').value;
+            const confirmar = document.getElementById('cadastro-confirmar-senha').value;
+            if (senha !== confirmar) {
+                showToast('Confira sua senha', 'Os campos de senha não estão iguais.');
+                document.getElementById('cadastro-confirmar-senha').focus();
+                return;
+            }
+            const perfil = document.getElementById('cadastro-perfil').value;
+            const nome = document.getElementById('cadastro-nome').value.trim();
+            showToast('Cadastro realizado!', `Obrigado, ${nome} (${perfil})! Cadastro validado no protótipo.`);
+            document.getElementById('impact-register-form').reset();
+            switchScreen('como-participar');
+        }
+
+        function handleAcessoSimulado(tipo) {
+            showToast('Acesso Simultâneo', `Acesso como "${tipo}" ativado no protótipo.`);
+            switchScreen('como-participar');
+        }
+
+        function handleVerHistoriaDetalhe() {
+            showToast('História de Impacto', 'Visualização demonstrativa expandida.');
+        }
+
+        function showNodeInfo(infoText) {
+            document.getElementById('node-info-box').innerHTML = `📍 <strong>Ponto Selecionado:</strong> ${infoText}`;
+        }
+
+        // TOAST NOTIFICATION HELPER
+        function showToast(title, message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        // JORNADA, METAS E CONFIRMAÇÃO DE ENTREGA
+        const journeyDemo = { items: 10, connections: 4, institutions: 2, recipientConfirmed: false, donorConfirmed: false, publicAuthorized: false };
+        function updateJourney() {
+            const done = journeyDemo.connections;
+            const items = journeyDemo.items;
+            const institutions = journeyDemo.institutions;
+            document.getElementById('stat-items').textContent = items;
+            document.getElementById('stat-connections').textContent = done;
+            document.getElementById('stat-institutions').textContent = institutions;
+            document.getElementById('stat-pending').textContent = journeyDemo.recipientConfirmed && journeyDemo.donorConfirmed ? '0' : '1';
+            const setGoal = (labelId, barId, value, target) => {
+                document.getElementById(labelId).textContent = `${Math.min(value,target)} / ${target}`;
+                document.getElementById(barId).style.width = `${Math.min(100, value/target*100)}%`;
+            };
+            setGoal('goal-items-label','goal-items-bar',items,10);
+            setGoal('goal-institutions-label','goal-institutions-bar',institutions,3);
+            setGoal('goal-connections-label','goal-connections-bar',done,5);
+            const complete = items >= 10 && institutions >= 3 && done >= 5;
+            document.getElementById('certificate-locked').classList.toggle('hidden', complete);
+            document.getElementById('certificate-ready').classList.toggle('hidden', !complete);
+            document.getElementById('journey-message').textContent = complete
+              ? 'Parabéns! Você concluiu todas as metas da jornada IMPACT e liberou seu certificado.'
+              : `Sua jornada está em andamento. ${Math.max(0,5-done)} conexão(ões) e ${Math.max(0,3-institutions)} instituição(ões) ainda faltam para concluir as metas restantes.`;
+        }
+        function simularConquista() {
+            if (journeyDemo.connections >= 5) {
+                showToast('Jornada concluída','Todas as metas demonstrativas já foram alcançadas.');
+                return;
+            }
+            journeyDemo.connections += 1;
+            journeyDemo.institutions = Math.min(3, journeyDemo.institutions + 1);
+            journeyDemo.items += 2;
+            const row = document.createElement('tr');
+            row.className = 'border-b';
+            row.innerHTML = `<td class="py-3 font-semibold">Nova conexão demonstrativa</td><td class="text-emerald-700 font-bold">Concluída</td><td>Simulação atual</td>`;
+            document.getElementById('activity-history').prepend(row);
+            updateJourney();
+            showToast('Conexão concluída', 'A atividade foi adicionada à sua trajetória demonstrativa.');
+        }
+        function atualizarPrevisao() {
+            const field = document.getElementById('delivery-date');
+            const output = document.getElementById('delivery-countdown');
+            if (!field || !field.value) { output.textContent = 'Defina uma data'; return; }
+            const today = new Date(); today.setHours(0,0,0,0);
+            const selected = new Date(field.value + 'T00:00:00');
+            const days = Math.round((selected - today) / 86400000);
+            output.textContent = days > 1 ? `Faltam ${days} dias` : days === 1 ? 'Falta 1 dia' : days === 0 ? 'Previsão para hoje' : `Data prevista há ${Math.abs(days)} dia(s)`;
+        }
+        function atualizarStatusEntrega() {
+            const complete = journeyDemo.recipientConfirmed && journeyDemo.donorConfirmed;
+            document.getElementById('recipient-step-icon').className = `w-8 h-8 rounded-full ${journeyDemo.recipientConfirmed?'bg-emerald-500 text-white':'bg-slate-200 text-slate-500'} flex items-center justify-center shrink-0`;
+            document.getElementById('recipient-step-icon').textContent = journeyDemo.recipientConfirmed ? '✓' : '4';
+            document.getElementById('donor-step-icon').className = `w-8 h-8 rounded-full ${journeyDemo.donorConfirmed?'bg-emerald-500 text-white':'bg-slate-200 text-slate-500'} flex items-center justify-center shrink-0`;
+            document.getElementById('donor-step-icon').textContent = journeyDemo.donorConfirmed ? '✓' : '5';
+            document.getElementById('tracking-status').textContent = complete ? 'Doação concluída' : journeyDemo.recipientConfirmed ? 'Recebimento confirmado • aguardando doador' : 'Aguardando recebimento';
+            document.getElementById('tracking-status').className = `px-3 py-1 rounded-full text-xs font-bold ${complete?'bg-emerald-100 text-emerald-800':'bg-amber-100 text-amber-800'}`;
+            document.getElementById('btn-recipient-confirm').disabled = journeyDemo.recipientConfirmed;
+            document.getElementById('btn-donor-confirm').disabled = journeyDemo.donorConfirmed;
+            document.getElementById('btn-recipient-confirm').classList.toggle('opacity-50', journeyDemo.recipientConfirmed);
+            document.getElementById('btn-donor-confirm').classList.toggle('opacity-50', journeyDemo.donorConfirmed);
+            document.getElementById('stat-pending').textContent = complete ? '0' : '1';
+            if (complete) {
+                showToast('Conexão finalizada','As duas partes confirmaram. A conexão agora conta como concluída na demonstração.');
+                journeyDemo.connections = Math.min(5, journeyDemo.connections + 1);
+                journeyDemo.institutions = Math.min(3, journeyDemo.institutions + 1);
+                updateJourney();
+            }
+        }
+        function confirmarRecebimento() {
+            if (journeyDemo.recipientConfirmed) return;
+            journeyDemo.recipientConfirmed = true;
+            atualizarStatusEntrega();
+            showToast('Recebimento confirmado','O beneficiário registrou que recebeu os itens.');
+        }
+        function confirmarEntrega() {
+            if (journeyDemo.donorConfirmed) return;
+            journeyDemo.donorConfirmed = true;
+            atualizarStatusEntrega();
+            showToast('Confirmação registrada','O doador registrou a realização da entrega.');
+        }
+        function abrirCertificado() {
+            const complete = journeyDemo.items >= 10 && journeyDemo.institutions >= 3 && journeyDemo.connections >= 5;
+            if (!complete) { showToast('Certificado indisponível','Conclua todas as metas para liberar o certificado.'); return; }
+            const win = window.open('', '_blank');
+            if (!win) { showToast('Janela bloqueada','Permita a abertura de pop-ups para visualizar o certificado.'); return; }
+            win.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Certificado IMPACT</title><style>
+*{box-sizing:border-box}body{margin:0;padding:34px;background:#eaf0ef;font-family:Georgia,'Times New Roman',serif;color:#123744}.sheet{max-width:1000px;min-height:700px;margin:0 auto;background:#fffdf7;padding:18px;box-shadow:0 18px 55px #0d2b3a22}.frame{min-height:664px;border:2px solid #0d5960;padding:12px;position:relative;background:linear-gradient(135deg,#fffdf7 0%,#f8fbf7 58%,#fff9e9 100%);overflow:hidden}.frame:before,.frame:after{content:'';position:absolute;width:190px;height:190px;border:1px solid #d7ad48;border-radius:50%;opacity:.35}.frame:before{top:-110px;left:-90px;box-shadow:0 0 0 12px #d7ad4810,0 0 0 25px #d7ad480a}.frame:after{right:-110px;bottom:-110px;box-shadow:0 0 0 12px #d7ad4810,0 0 0 25px #d7ad480a}.inner{min-height:636px;border:1px solid #d7ad48;padding:42px 54px;text-align:center;position:relative;z-index:1}.eyebrow{font:700 11px Arial,sans-serif;letter-spacing:5px;text-transform:uppercase;color:#a77b22}.brand{font:900 52px Arial,sans-serif;letter-spacing:12px;color:#0d2b3a;margin:16px 0 3px}.brandline{height:3px;width:110px;background:linear-gradient(90deg,#10b981,#d7ad48);margin:14px auto 28px}.seal{width:76px;height:76px;margin:0 auto 20px;border:2px solid #c69b3c;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#b68a2e;font:36px Georgia,serif;box-shadow:inset 0 0 0 5px #f6edcf}.title{font:700 30px Georgia,serif;color:#155b63;margin:0 0 24px}.intro{font:italic 17px Georgia,serif;color:#5b6d6d;margin:0 0 12px}.name{font:700 34px Georgia,serif;color:#0d2b3a;margin:8px 0 18px}.copy{max-width:690px;margin:0 auto;font:17px/1.65 Georgia,serif;color:#43595a}.stats{display:flex;justify-content:center;gap:14px;margin:30px auto 26px;max-width:760px}.stat{flex:1;border:1px solid #d9c68f;background:linear-gradient(145deg,#f7f5e9,#eef7f1);padding:16px 10px;border-radius:8px}.stat b{display:block;font:700 26px Arial,sans-serif;color:#0d5960}.stat span{display:block;font:700 10px Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#687b78;margin-top:6px}.motto{font:700 13px Arial,sans-serif;letter-spacing:3px;color:#a77b22;text-transform:uppercase;margin:22px 0 30px}.signatures{display:flex;justify-space-around;gap:30px;margin:30px auto 0;max-width:720px}.sig{width:260px;border-top:1px solid #8ca09b;padding-top:9px;font:12px Arial,sans-serif;color:#536967}.footer{font:11px Arial,sans-serif;color:#71817e;margin-top:28px;letter-spacing:1px}.print{display:block;margin:22px auto 0;padding:13px 24px;border:0;border-radius:7px;background:#0d5960;color:white;font-weight:bold;cursor:pointer}@media(max-width:700px){body{padding:8px}.inner{padding:28px 16px}.brand{font-size:38px}.title{font-size:24px}.name{font-size:27px}.stats{gap:6px}.stat{padding:12px 4px}.stat b{font-size:20px}.stat span{font-size:8px}.signatures{gap:12px}.sig{width:48%}}@media print{body{padding:0;background:white}.sheet{box-shadow:none;max-width:none;min-height:100vh}.print{display:none}@page{size:A4 landscape;margin:10mm}}
+</style></head><body><main class="sheet"><div class="frame"><div class="inner"><div class="eyebrow">Reconhecimento de jornada</div><div class="brand">IMPACT</div><div class="brandline"></div><div class="seal">✦</div><h1 class="title">Certificado de Conquista</h1><p class="intro">Este reconhecimento é concedido a</p><div class="name">Mariana</div><p class="copy">Por concluir sua jornada no IMPACT e alcançar as metas estabelecidas, contribuindo para aproximar recursos disponíveis de instituições e pessoas que precisam deles. Cada conexão concluída representa uma oportunidade transformada em impacto.</p><div class="stats"><div class="stat"><b>${journeyDemo.items}</b><span>Itens destinados</span></div><div class="stat"><b>${journeyDemo.connections}</b><span>Conexões concluídas</span></div><div class="stat"><b>${journeyDemo.institutions}</b><span>Instituições apoiadas</span></div></div><div class="motto">Doe. Conecte. Transforme.</div><div class="signatures"><div class="sig">IMPACT<br>Plataforma de conexão comunitária</div><div class="sig">Itapetininga – SP<br>Jornada demonstrativa</div></div><div class="footer">CERTIFICADO DEMONSTRATIVO • PROTÓTIPO ACADÊMICO IMPACT</div></div></div></main><button class="print" onclick="window.print()">Imprimir / Salvar em PDF</button></body></html>`);
+            win.document.close();
+        }
+        function publicarDestaque() {
+            const opt = document.getElementById('public-optin');
+            if (!opt.checked) { showToast('Autorização necessária','Marque a opção para autorizar a exibição demonstrativa do perfil.'); return; }
+            journeyDemo.publicAuthorized = true;
+            document.getElementById('community-highlights').innerHTML = `<div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4"><span class="text-[10px] font-black text-emerald-700 uppercase">Jornada concluída • autorização concedida</span><h4 class="font-bold text-deepTeal mt-1">Mariana</h4><p class="text-xs text-slate-600">${journeyDemo.items} itens destinados • ${journeyDemo.connections} conexões concluídas • ${journeyDemo.institutions} instituições apoiadas</p></div>`;
+            showToast('Destaque atualizado','Seu perfil demonstrativo foi incluído nos Destaques da Comunidade.');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const date = document.getElementById('delivery-date');
+            if (date) {
+                const d = new Date(); d.setDate(d.getDate()+3);
+                date.value = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+                date.addEventListener('change', atualizarPrevisao);
+                atualizarPrevisao();
+            }
+            updateJourney();
+        });
+
+        // INITIAL ONLOAD SETUP
+        window.onload = function() {
+            switchScreen('inicio');
+        };
+    </script>
+
+    <!-- ÁUDIO + LIBRAS - IMPACT -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+
+        function falarPagina() {
+            if (!('speechSynthesis' in window)) {
+                alert('Seu navegador não oferece suporte à leitura de voz.');
+                return;
+            }
+
+            speechSynthesis.cancel();
+
+            const telaAtual = document.querySelector('.screen-view.active');
+            let texto = telaAtual ? telaAtual.innerText : document.body.innerText;
+            texto = texto.replace(/\s+/g, ' ').trim();
+
+            if (!texto) {
+                alert('Não há conteúdo para ouvir.');
+                return;
+            }
+
+            const fala = new SpeechSynthesisUtterance(texto);
+            fala.lang = 'pt-BR';
+            fala.rate = 0.9;
+            fala.pitch = 1;
+            fala.volume = 1;
+
+            speechSynthesis.speak(fala);
+        }
+
+        function pararLeitura() {
+            speechSynthesis.cancel();
+        }
+
+        function abrirLibras() {
+            const botaoVLibras = document.querySelector('[vw-access-button]');
+            if (botaoVLibras) {
+                botaoVLibras.click();
+            }
+        }
+    </script>
+</body>
+</html>
